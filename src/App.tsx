@@ -1,45 +1,53 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import logo from './logo.svg'
 import './App.css'
+import Greeting from './GreetingFunctional'
 
-function App() {
-  const [count, setCount] = useState(0)
+class App extends React.Component {
+  constructor(props: any) {
+    super(props)
+    this.state = {
+      enteredName: "",
+      message: ""
+    }
+    this.onChangeName = this.onChangeName.bind(this)
+  }
+  
+  state: {enteredName: string, message: string}
+  
+  onChangeName(e: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      enteredName: e.target.value,
+      message: `Hello from, ${e.target.value}`
+    })
+  }
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+  render() {
+    console.log("Rendering App...")
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} alt="logo" className="App-logo" />
+          <input value={this.state.enteredName}
+          onChange={this.onChangeName} />
+          <Greeting message={this.state.message} />
+        </header>
+      </div>
+    )
+  }
 }
+
+// function App() {
+//   const [count, setCount] = useState(0)
+
+//   return (
+//     <div className="App">
+//       <header className="App-header">
+//         <img src={logo} className="App-logo" alt="logo" />
+//         <Greeting name="Irma Gustia" />
+//       </header>
+//     </div>
+//   )
+// }
 
 export default App
